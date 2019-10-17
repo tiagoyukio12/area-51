@@ -1,9 +1,7 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://art/platformer_char_spritesheet.png" type="Texture" id=2]
-
-
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 10, 24 )
@@ -57,6 +55,9 @@ tracks/0/keys = {
 "values": [ Rect2( 0, 0, 64, 64 ), Rect2( 64, 0, 64, 64 ), Rect2( 128, 0, 64, 64 ), Rect2( 64, 0, 64, 64 ) ]
 }
 
+[sub_resource type="OccluderPolygon2D" id=6]
+polygon = PoolVector2Array( 0, -25, 10, 25, -10, 25 )
+
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 1 )
 
@@ -77,3 +78,6 @@ region_rect = Rect2( 0, 64, 64, 64 )
 anims/idle = SubResource( 3 )
 anims/jump = SubResource( 4 )
 anims/walk = SubResource( 5 )
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource( 6 )
