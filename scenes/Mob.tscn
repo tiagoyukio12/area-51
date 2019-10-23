@@ -46,3 +46,7 @@ anims/walk = SubResource( 2 )
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 occluder = SubResource( 3 )
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color( 0.956863, 0.0313726, 0.0313726, 0.784314 )
+polygon = PoolVector2Array( 0, 0, -250, 10, -250, -10 )

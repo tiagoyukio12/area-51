@@ -19,6 +19,17 @@ func _physics_process(_delta):
 		$AnimationPlayer.play("walk")
 		$Sprite.modulate = Color(1, 1, 1)
 	
+	# Get collision distance
+	var collision_distance = 250 if velocity.x > 0 else -250
+	if collision:
+			var world_point = $RayCast2D.get_collision_point()
+			collision_distance = world_point.x - self.position.x
+	print(collision_distance)
+	# Draw vision cone
+	$Polygon2D.polygon[1] = Vector2(collision_distance, 10)
+	$Polygon2D.polygon[2] = Vector2(collision_distance, -10)
+	print($Polygon2D.polygon[0])
+	
 	# Gravity
 	var grounded = is_on_floor()
 	velocity.y += GRAVITY
