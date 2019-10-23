@@ -8,7 +8,7 @@ func _ready():
 	#pass # Replace with function body.
 	var mob = MOB.instance()
 	add_child(mob)
-	mob.position = Vector2(950, 20)
+	mob.position = Vector2(900, 500)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

@@ -14,7 +14,7 @@ var facing_right = false
 var motion = Vector2()
 var max_speed = MOVE_SPEED
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	motion.y += GRAVITY
 	var friction = false
 	
