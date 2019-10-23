@@ -10,7 +10,6 @@ const MAX_FALL_SPEED = 1000
 onready var anim_player = $AnimationPlayer
 onready var sprite = $Sprite
 
-var y_velo = 0
 var facing_right = false
 var motion = Vector2()
 var max_speed = MOVE_SPEED
@@ -20,11 +19,9 @@ func _physics_process(delta):
 	var friction = false
 	
 	if Input.is_action_pressed("move_right"):
-		if motion.x < max_speed:
-			motion.x += ACCEL
+		motion.x = min(motion.x + ACCEL, max_speed)
 	elif Input.is_action_pressed("move_left"):
-		if motion.x > -max_speed:
-			motion.x -= ACCEL
+		motion.x = max(motion.x - ACCEL, -max_speed)
 	else:
 		friction = true
 	if is_on_floor():
