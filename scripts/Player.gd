@@ -1,6 +1,8 @@
 extends KinematicBody2D
 
-const MOVE_SPEED = 500
+const MOVE_SPEED = 250
+const RUN_SPEED = 500
+const ACCEL = 50
 const JUMP_FORCE = 1000
 const GRAVITY = 50
 const MAX_FALL_SPEED = 1000
@@ -10,32 +12,49 @@ onready var sprite = $Sprite
 
 var y_velo = 0
 var facing_right = false
+var motion = Vector2()
+var max_speed = MOVE_SPEED
 
 func _physics_process(delta):
-	var move_dir = 0
-	if Input.is_action_pressed("move_right"):
-		move_dir += 1
-	if Input.is_action_pressed("move_left"):
-		move_dir -= 1
+	motion.y += GRAVITY
+	var friction = false
 	
-	move_and_slide(Vector2(move_dir * MOVE_SPEED, y_velo), Vector2(0, -1))
+	if Input.is_action_pressed("move_right"):
+		if motion.x < max_speed:
+			motion.x += ACCEL
+	elif Input.is_action_pressed("move_left"):
+		if motion.x > -max_speed:
+			motion.x -= ACCEL
+	else:
+		friction = true
+	if is_on_floor():
+		if Input.is_action_pressed("naruto_run"):
+			max_speed = RUN_SPEED
+		else:
+			max_speed = MOVE_SPEED
+	
+	motion = move_and_slide(motion, Vector2(0, -1))
 	
 	var grounded = is_on_floor()
-	y_velo += GRAVITY
-	if grounded and Input.is_action_just_pressed("jump"):
-		y_velo = -JUMP_FORCE
-	if grounded and y_velo >= 0:
-		y_velo = 5
-	if y_velo > MAX_FALL_SPEED:
-		y_velo = MAX_FALL_SPEED
+	if grounded:
+		if friction:
+			motion.x = lerp(motion.x, 0, 0.2)
+		if Input.is_action_just_pressed("jump"):
+			motion.y = -JUMP_FORCE
+		if motion.y >= 0:
+			motion.y = 5
+	else:
+		motion.x = lerp(motion.x, 0, 0.05)
+	if motion.y > MAX_FALL_SPEED:
+		motion.y = MAX_FALL_SPEED
 	
-	if facing_right and move_dir < 0:
+	if facing_right and motion.x < 0:
 		flip()
-	if !facing_right and move_dir > 0:
+	if !facing_right and motion.x > 0:
 		flip()
 	
 	if grounded:
-		if move_dir == 0:
+		if abs(motion.x) < 10:
 			play_anim("idle")
 		else:
 			play_anim("walk")
