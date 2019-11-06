@@ -14,6 +14,14 @@ var facing_right = false
 var motion = Vector2()
 var max_speed = MOVE_SPEED
 
+var life
+
+signal life_changed
+
+func _ready():
+	life = 100
+	emit_signal("life_changed", life)
+
 func _physics_process(delta):
 	motion.y += GRAVITY
 	var friction = false
