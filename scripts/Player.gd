@@ -14,13 +14,13 @@ var facing_right = false
 var motion = Vector2()
 var max_speed = MOVE_SPEED
 
-var life
+var max_health = 100
+var health = 100
 
-signal life_changed
+signal health_changed
 
 func _ready():
-	life = 100
-	emit_signal("life_changed", life)
+	pass
 
 func _physics_process(delta):
 	motion.y += GRAVITY
@@ -74,3 +74,7 @@ func play_anim(anim_name):
 	if anim_player.is_playing() and anim_player.current_animation == anim_name:
 		return
 	anim_player.play(anim_name)
+
+func _process(delta):
+	if Input.is_action_pressed("pause_menu"):
+		pass
