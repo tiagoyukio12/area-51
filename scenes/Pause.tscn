@@ -1,0 +1,82 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://scripts/Pause.gd" type="Script" id=1]
+[ext_resource path="res://art/TittleScreen/area-51-pause.png" type="Texture" id=2]
+[ext_resource path="res://art/TittleScreen/area-51-resume.png" type="Texture" id=3]
+[ext_resource path="res://art/TittleScreen/area-52-options.png" type="Texture" id=4]
+[ext_resource path="res://art/TittleScreen/area-51-quit.png" type="Texture" id=5]
+
+[node name="Pause" type="Control"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="Panel" type="Panel" parent="."]
+modulate = Color( 1, 1, 1, 0.470588 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -256.0
+margin_top = -150.0
+margin_right = 256.0
+margin_bottom = 150.0
+
+[node name="Panel" type="Panel" parent="MarginContainer"]
+margin_right = 512.0
+margin_bottom = 300.0
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Panel"]
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 2 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+margin_right = 512.0
+margin_bottom = 300.0
+custom_constants/separation = 33
+alignment = 1
+
+[node name="Resume" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+margin_top = 25.0
+margin_right = 512.0
+margin_bottom = 81.0
+alignment = 1
+
+[node name="ResumeButton" type="TextureButton" parent="MarginContainer/VBoxContainer/Resume"]
+margin_left = 68.0
+margin_right = 444.0
+margin_bottom = 56.0
+texture_normal = ExtResource( 3 )
+
+[node name="Options" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+margin_top = 114.0
+margin_right = 512.0
+margin_bottom = 178.0
+alignment = 1
+
+[node name="OptionsButton" type="TextureButton" parent="MarginContainer/VBoxContainer/Options"]
+margin_left = 64.0
+margin_right = 448.0
+margin_bottom = 64.0
+texture_normal = ExtResource( 4 )
+
+[node name="Quit" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+margin_top = 211.0
+margin_right = 512.0
+margin_bottom = 275.0
+alignment = 1
+
+[node name="QuitButton" type="TextureButton" parent="MarginContainer/VBoxContainer/Quit"]
+margin_left = 160.0
+margin_right = 352.0
+margin_bottom = 64.0
+texture_normal = ExtResource( 5 )
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Resume/ResumeButton" to="." method="_on_ResumeButton_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Options/OptionsButton" to="." method="_on_OptionsButton_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Quit/QuitButton" to="." method="_on_QuitButton_pressed"]

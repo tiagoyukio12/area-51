@@ -11,13 +11,14 @@ const MAX_FALL_SPEED = 1000
 var facing_right = true
 var motion = Vector2()
 var max_speed = MOVE_SPEED
-var life
 
-signal life_changed
+var max_health = 100
+var health = 100
+
+signal health_changed
 
 func _ready():
-	life = 100
-	emit_signal("life_changed", life)
+	pass
 
 func _physics_process(delta):
 	motion.y += GRAVITY
@@ -68,6 +69,8 @@ func flip():
 	$AnimatedSprite.flip_h = !$AnimatedSprite.flip_h
 	
 func dead():
-	
 	motion = Vector2(0,0)
-	
+
+func _process(delta):
+	if Input.is_action_pressed("pause_menu"):
+		pass
