@@ -47,10 +47,10 @@ func _physics_process(delta):
 			if first_move == false:
 				pause = true
 				
-		if $RayCast2D.is_colliding():
-			if $RayCast2D.get_collider():
-				var player = get_parent().get_parent().get_node("Player/PlayerBody")
-				player.dead()
+		#if $RayCast2D.is_colliding():
+		#	if $RayCast2D.get_collider():
+		#		var player = get_parent().get_parent().get_node("Player/PlayerBody")
+		#		player.dead()
 			
 	else:
 		$AnimatedSprite.play("idle")

@@ -1,15 +1,16 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://art/bonequinho idle/sprite_0.png" type="Texture" id=2]
 [ext_resource path="res://art/bonequinho idle/sprite_1.png" type="Texture" id=3]
-[ext_resource path="res://art/bonequinho correndo/sprite_0.png" type="Texture" id=4]
-[ext_resource path="res://art/bonequinho correndo/sprite_1.png" type="Texture" id=5]
-[ext_resource path="res://art/bonequinho correndo/sprite_2.png" type="Texture" id=6]
-[ext_resource path="res://art/bonequinho correndo/sprite_3.png" type="Texture" id=7]
-[ext_resource path="res://art/bonequinho correndo/sprite_4.png" type="Texture" id=8]
-[ext_resource path="res://art/bonequinho correndo/sprite_5.png" type="Texture" id=9]
-[ext_resource path="res://art/dead.png" type="Texture" id=10]
+[ext_resource path="res://art/bonequinho morto.png" type="Texture" id=4]
+[ext_resource path="res://art/bonequinho correndo/sprite_0.png" type="Texture" id=5]
+[ext_resource path="res://art/bonequinho correndo/sprite_1.png" type="Texture" id=6]
+[ext_resource path="res://art/bonequinho correndo/sprite_2.png" type="Texture" id=7]
+[ext_resource path="res://art/bonequinho correndo/sprite_3.png" type="Texture" id=8]
+[ext_resource path="res://art/bonequinho correndo/sprite_4.png" type="Texture" id=9]
+[ext_resource path="res://art/bonequinho correndo/sprite_5.png" type="Texture" id=10]
+[ext_resource path="res://art/bonequinho pulo.png" type="Texture" id=11]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 17.3869, 24 )
@@ -23,14 +24,19 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ) ],
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "dead",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ) ],
 "loop": true,
 "name": "naruto_running",
 "speed": 12.0
 }, {
-"frames": [ ExtResource( 10 ) ],
+"frames": [ ExtResource( 11 ) ],
 "loop": true,
-"name": "dead",
+"name": "jump",
 "speed": 5.0
 } ]
 
@@ -49,9 +55,9 @@ position = Vector2( 0, 14.5433 )
 shape = SubResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-position = Vector2( -0.880264, 13.2038 )
+position = Vector2( 0.44011, -1.90735e-005 )
 frames = SubResource( 3 )
-animation = "dead"
+animation = "jump"
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 occluder = SubResource( 4 )
