@@ -7,10 +7,8 @@ const JUMP_FORCE = 1000
 const GRAVITY = 50
 const MAX_FALL_SPEED = 1000
 
-onready var anim_player = $AnimationPlayer
-onready var sprite = $Sprite
 
-var facing_right = false
+var facing_right = true
 var motion = Vector2()
 var max_speed = MOVE_SPEED
 
@@ -52,17 +50,17 @@ func _physics_process(delta):
 	
 	if grounded:
 		if abs(motion.x) < 10:
-			play_anim("idle")
+			$AnimatedSprite.play("idle")
 		else:
-			play_anim("walk")
+			$AnimatedSprite.play("naruto_running")
 	else:
-		play_anim("jump")
+		$AnimatedSprite.play("naruto_running")
 
 func flip():
 	facing_right = !facing_right
-	sprite.flip_h = !sprite.flip_h
-
-func play_anim(anim_name):
-	if anim_player.is_playing() and anim_player.current_animation == anim_name:
-		return
-	anim_player.play(anim_name)
+	$AnimatedSprite.flip_h = !$AnimatedSprite.flip_h
+	
+func dead():
+	
+	motion = Vector2(0,0)
+	
