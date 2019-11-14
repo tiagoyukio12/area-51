@@ -1,5 +1,6 @@
 extends KinematicBody2D
 
+const BULLET = preload("../scenes/Bullet.tscn")
 const MOVE_SPEED = 250
 const RUN_SPEED = 500
 const ACCEL = 50
@@ -23,7 +24,10 @@ func _ready():
 func _physics_process(delta):
 	motion.y += GRAVITY
 	var friction = false
-	
+	if Input.is_action_just_pressed("shoot"):
+		var bullet = BULLET.instance()
+		bullet.setup(position, facing_right)
+		get_parent().add_child(bullet)
 	if Input.is_action_pressed("move_right"):
 		motion.x = min(motion.x + ACCEL, max_speed)
 	elif Input.is_action_pressed("move_left"):
