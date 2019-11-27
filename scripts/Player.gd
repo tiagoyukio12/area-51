@@ -12,6 +12,7 @@ const MAX_FALL_SPEED = 1000
 var facing_right = true
 var motion = Vector2()
 var max_speed = MOVE_SPEED
+var can_shoot = false
 
 var max_health = 100
 var health = 100
@@ -23,11 +24,18 @@ func _ready():
 
 func _physics_process(delta):
 	motion.y += GRAVITY
+	
+	if health <= 0:
+		motion.x = 0
+		motion = move_and_slide(motion, Vector2(0, -1))
+		return
+	
 	var friction = false
 	if Input.is_action_just_pressed("shoot"):
-		var bullet = BULLET.instance()
-		bullet.setup(position, facing_right)
-		get_parent().add_child(bullet)
+		if can_shoot:
+			var bullet = BULLET.instance()
+			bullet.setup(self, position, facing_right)
+			get_parent().add_child(bullet)
 	if Input.is_action_pressed("move_right"):
 		motion.x = min(motion.x + ACCEL, max_speed)
 	elif Input.is_action_pressed("move_left"):
@@ -66,7 +74,7 @@ func _physics_process(delta):
 		else:
 			$AnimatedSprite.play("naruto_running")
 	else:
-		$AnimatedSprite.play("naruto_running")
+		$AnimatedSprite.play("jump")
 
 func flip():
 	facing_right = !facing_right
@@ -78,3 +86,14 @@ func dead():
 func _process(delta):
 	if Input.is_action_pressed("pause_menu"):
 		pass
+
+func _on_World2_ready():
+	can_shoot = true
+	$Camera2D.zoom = Vector2(1, 1)
+
+func take_damage(damage):
+	health -= damage
+	emit_signal("health_changed")
+	if health <= 0:
+		$AnimatedSprite.play("dead")
+		# TODO: game over

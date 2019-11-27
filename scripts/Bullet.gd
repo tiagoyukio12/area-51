@@ -3,11 +3,14 @@ extends RigidBody2D
 const SPEED = 1000
 const OFFSET = 15
 
+var shooter
+
 
 func _ready():
 	$Timer.connect("timeout", self, "_on_timer_timeout")
 
-func setup(pos, facing_right):
+func setup(shooter, pos, facing_right):
+	self.shooter = shooter
 	position = pos
 	var direction = 1 if facing_right else -1
 	position.x += direction * OFFSET
@@ -19,6 +22,13 @@ func _on_timer_timeout():
 	queue_free()
 
 func _on_RigidBody2D_body_entered(body):
-	if body.name == "Enemy":
-		body.queue_free()
-		queue_free()
+	if shooter != null:
+		var shooter_name = shooter.name
+		var body_name = body.name
+		if body_name == shooter_name:
+			return
+		if body_name == "Mob" or body_name == "Player":
+			body.take_damage(10)
+			queue_free()
+
+func get_class(): return "Bullet"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://scripts/World.gd" type="Script" id=1]
 [ext_resource path="res://scenes/Pause.tscn" type="PackedScene" id=2]
@@ -10,10 +10,11 @@
 [ext_resource path="res://art/spot.png" type="Texture" id=8]
 [ext_resource path="res://tiles.tres" type="TileSet" id=9]
 [ext_resource path="res://art/tile_box_2.png" type="Texture" id=10]
-[ext_resource path="res://art/cerca.png" type="Texture" id=11]
-[ext_resource path="res://enemy.tscn" type="PackedScene" id=12]
+[ext_resource path="res://base_1.tres" type="TileSet" id=11]
+[ext_resource path="res://art/cerca.png" type="Texture" id=12]
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=13]
 [ext_resource path="res://scenes/WorldComplete.tscn" type="PackedScene" id=14]
+[ext_resource path="res://scenes/Mob.tscn" type="PackedScene" id=15]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 62, 0, 62, 60, 0, 60 )
@@ -86,6 +87,7 @@ position = Vector2( -131.833, 36.8238 )
 texture = ExtResource( 6 )
 
 [node name="Light2D" type="Light2D" parent="."]
+editor/display_folded = true
 position = Vector2( 874.587, 174.5 )
 scale = Vector2( 2.51406, 1.76855 )
 texture = ExtResource( 7 )
@@ -107,11 +109,15 @@ tile_set = SubResource( 2 )
 format = 1
 tile_data = PoolIntArray( 1048599, 0, 0, 1114134, 0, 0, 1114135, 0, 0, 1179656, 0, 0, 1179669, 0, 0, 1179670, 0, 0, 1179671, 0, 0, 1245192, 0, 0, 1245193, 0, 0, 1245204, 0, 0, 1245205, 0, 0, 1245206, 0, 0, 1245207, 0, 0 )
 
+[node name="TileMap4" type="TileMap" parent="."]
+tile_set = ExtResource( 11 )
+format = 1
+
 [node name="cerca" type="Sprite" parent="."]
 editor/display_folded = true
 position = Vector2( -454.963, 1319.28 )
 scale = Vector2( 1.51472, 1.94048 )
-texture = ExtResource( 11 )
+texture = ExtResource( 12 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="cerca"]
 
@@ -120,13 +126,13 @@ position = Vector2( 197.684, -26.5159 )
 scale = Vector2( 4.31598, 20.05 )
 shape = SubResource( 3 )
 
-[node name="Enemy" parent="." instance=ExtResource( 12 )]
-position = Vector2( 758.419, 1248.33 )
-
 [node name="Player" parent="." instance=ExtResource( 13 )]
-position = Vector2( 166.994, 1257.34 )
+position = Vector2( 166.994, 1255.23 )
 scale = Vector2( 0.985813, 0.818126 )
 
 [node name="WorldComplete" parent="." instance=ExtResource( 14 )]
-position = Vector2( 4481.54, 545.156 )
+position = Vector2( 296.233, 1247.87 )
 next_world = "res://scenes/World2.tscn"
+
+[node name="Mob" parent="." instance=ExtResource( 15 )]
+position = Vector2( 1074.16, 1056.72 )

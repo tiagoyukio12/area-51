@@ -1,19 +1,65 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://tiles.tres" type="TileSet" id=1]
-[ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scenes/WorldComplete.tscn" type="PackedScene" id=3]
+[ext_resource path="res://art/base_tileset/background.png" type="Texture" id=1]
+[ext_resource path="res://scenes/GUI.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/Pause.tscn" type="PackedScene" id=3]
+[ext_resource path="res://tiles_world2.tres" type="TileSet" id=4]
+[ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/WorldComplete.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/Mob.tscn" type="PackedScene" id=7]
 
-[node name="Node2D" type="Node2D"]
+[node name="World2" type="Node2D"]
+__meta__ = {
+"_edit_horizontal_guides_": [  ]
+}
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer1" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.1, 0.1 )
+motion_mirroring = Vector2( 1269, 600 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer1"]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 1269, 240 )
+
+[node name="Sprite2" type="Sprite" parent="ParallaxBackground/ParallaxLayer1"]
+texture = ExtResource( 1 )
+offset = Vector2( 0, 240 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 1269, 240 )
+
+[node name="Sprite3" type="Sprite" parent="ParallaxBackground/ParallaxLayer1"]
+texture = ExtResource( 1 )
+offset = Vector2( 0, 480 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 1269, 240 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="CanvasLayer" instance=ExtResource( 2 )]
+
+[node name="Pause" parent="CanvasLayer" instance=ExtResource( 3 )]
+visible = false
 
 [node name="TileMap" type="TileMap" parent="."]
-tile_set = ExtResource( 1 )
+scale = Vector2( 4, 4 )
+tile_set = ExtResource( 4 )
+cell_size = Vector2( 16, 16 )
 format = 1
-tile_data = PoolIntArray( 393216, 0, 0, 393217, 0, 0, 393218, 0, 0, 393219, 0, 0, 393220, 0, 0, 393221, 0, 0, 393222, 0, 0, 393223, 0, 0, 393224, 0, 0, 393225, 0, 0, 393226, 0, 0, 393227, 0, 0, 393228, 0, 0, 393229, 0, 0, 393230, 0, 0, 393231, 0, 0 )
+tile_data = PoolIntArray( 327686, 7, 0, 327687, 7, 0, 327688, 7, 0, 327689, 7, 0, 327690, 7, 0, 327691, 7, 0, 327692, 7, 0, 327693, 7, 0, 327694, 7, 0, 327695, 7, 0, 327696, 7, 0, 327697, 7, 0, 327698, 7, 0, 327699, 7, 0, 327700, 7, 0, 327701, 7, 0, 327704, 7, 0, 327705, 7, 0, 327706, 7, 0, 327707, 7, 0, 327711, 7, 0, 327712, 7, 0, 327713, 7, 0, 327714, 7, 0, 393222, 5, 0, 524287, 7, 0, 458752, 7, 0, 458753, 7, 0, 458754, 7, 0, 458755, 7, 0, 458756, 7, 0, 458757, 7, 0, 458758, 8, 0 )
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="Player" parent="." instance=ExtResource( 2 )]
+[node name="Player" parent="." instance=ExtResource( 5 )]
 position = Vector2( 43.1694, 341.038 )
 
-[node name="WorldComplete" parent="." instance=ExtResource( 3 )]
-position = Vector2( 955.882, 321.325 )
+[node name="WorldComplete" parent="." instance=ExtResource( 6 )]
+position = Vector2( 2313.31, -194.233 )
 next_world = "res://scenes/World.tscn"
+
+[node name="Mob" parent="." instance=ExtResource( 7 )]
+position = Vector2( 1318.45, 253.154 )
+[connection signal="ready" from="." to="Player" method="_on_World2_ready"]
