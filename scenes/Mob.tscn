@@ -65,3 +65,7 @@ texture_progress = ExtResource( 4 )
 [node name="ShootingTimer" type="Timer" parent="."]
 wait_time = 0.4
 one_shot = true
+
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true

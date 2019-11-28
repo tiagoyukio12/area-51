@@ -9,10 +9,11 @@ const GRAVITY = 50
 const MAX_FALL_SPEED = 1000
 
 
+onready var healthbar = $Node2D/TextureProgress
 var facing_right = true
 var motion = Vector2()
 var max_speed = MOVE_SPEED
-var can_shoot = false
+var can_shoot = true
 
 var max_health = 100
 var health = 100
@@ -27,7 +28,7 @@ func _physics_process(delta):
 	
 	if health <= 0:
 		motion.x = 0
-		motion = move_and_slide(motion, Vector2(0, -1))
+		motion = move_and_slide(motion, Vector2.UP, false, 4, PI/4, false)
 		return
 	
 	var friction = false
@@ -48,7 +49,12 @@ func _physics_process(delta):
 		else:
 			max_speed = MOVE_SPEED
 	
-	motion = move_and_slide(motion, Vector2(0, -1))
+	motion = move_and_slide(motion, Vector2.UP, false, 4, PI/4, false)
+	
+	for index in get_slide_count():
+		var collision = get_slide_collision(index)
+		if collision.collider.is_in_group("bodies"):
+			collision.collider.apply_central_impulse(-collision.normal * 100)
 	
 	var grounded = is_on_floor()
 	if grounded:
@@ -97,3 +103,4 @@ func take_damage(damage):
 	if health <= 0:
 		$AnimatedSprite.play("dead")
 		# TODO: game over
+	healthbar.value = health

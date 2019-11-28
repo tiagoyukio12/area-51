@@ -23,11 +23,14 @@ func _on_timer_timeout():
 
 func _on_RigidBody2D_body_entered(body):
 	if shooter != null:
-		var shooter_name = shooter.name
+		var shooter_name = "null" if shooter == null else shooter.name
 		var body_name = body.name
 		if body_name == shooter_name:
 			return
-		if body_name == "Mob" or body_name == "Player":
+		if body_name.substr(0,3) == "Mob":
+			body.take_damage(25)
+			queue_free()
+		elif body_name == "Player":
 			body.take_damage(10)
 			queue_free()
 

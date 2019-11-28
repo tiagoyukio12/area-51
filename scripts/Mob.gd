@@ -9,7 +9,6 @@ var velocity = Vector2.ZERO
 var is_walking_right = false
 var sight_radius = 250
 
-
 func _ready():
 	$RayCast2D.cast_to = Vector2(-sight_radius, 0)
 
@@ -34,7 +33,7 @@ func _physics_process(_delta):
 		$AnimatedSprite.play("walk")
 	
 	# Move mob
-	velocity = move_and_slide(velocity, Vector2(0, -1))
+	velocity = move_and_slide(velocity, Vector2.UP, false, 4, PI/4, false)
 	
 	# Draw LoS cone
 	var collision_distance = sight_radius if velocity.x > 0 else -sight_radius
@@ -62,4 +61,10 @@ func shoot_bullet():
 func take_damage(damage):
 	health.value -= damage
 	if health.value <= 0:
-		queue_free()	
+		$DeathTimer.connect("timeout", self, "_on_deathtimer_timeout")
+		$DeathTimer.start()
+		$CollisionShape2D.queue_free()
+		self.hide()
+	
+func _on_deathtimer_timeout():
+	queue_free()
